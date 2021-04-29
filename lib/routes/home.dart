@@ -22,15 +22,19 @@ class _HomeRouteState extends State<HomeRoute> {
   }
 
   _itemBuilder(TodoModel todo, TodoController todoController) {
-    return Column(
-      children: [
-        SizedBox(height: 15),
-        TodoItem(
-            todo: todo,
-            onTap: () => todoController.toggleFinished(todo),
-            editedText: (String text) => todoController.editTodo(todo, text))
-      ],
-    );
+    return Dismissible(
+        key: Key('${todo.id}'),
+        onDismissed: (direction) => todoController.remove(todo),
+        child: Column(
+          children: [
+            SizedBox(height: 15),
+            TodoItem(
+                todo: todo,
+                onTap: () => todoController.toggleFinished(todo),
+                editedText: (String text) =>
+                    todoController.editTodo(todo, text))
+          ],
+        ));
   }
 
   @override
